@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Volume</title>
+    <!-- Add the Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/index_3pg.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <h1>Volume</h1>
+                <div class="form-group">
+                    <label for="shapeSelect">Select a shape:</label>
+                    <select class="form-control" id="shapeSelect" onchange="showDiagram()">
+                        <option value="cube">Cube (Cuboid)</option>
+                        <option value="sphere">Sphere (by Radius)</option>
+                        <option value="rectangle">Rectangle</option>
+                        <option value="conical">Conical</option>
+                        <!-- Add more shape options as needed -->
+                    </select>
+                </div>
+                <!-- Cube Input -->
+                <div id="cubeInputs" class="mt-3">
+                    <div class="form-group">
+                        <label for="cubeLength">Length:</label>
+                        <input type="number" class="form-control" id="cubeLength" placeholder="Enter Length">
+                    </div>
+                    <div class="form-group">
+                        <label for="cubeWidth">Width:</label>
+                        <input type="number" class="form-control" id="cubeWidth" placeholder="Enter Width">
+                    </div>
+                    <div class="form-group">
+                        <label for="cubeHeight">Height:</label>
+                        <input type="number" class="form-control" id="cubeHeight" placeholder="Enter Height">
+                    </div>
+                    <button class="btn btn-success" onclick="calculateCubeVolume()">Calculate Volume</button>
+                    <p id="cubeResult" class="mt-3"></p>
+                    <div class="form-group">
+                        <label for="fillLevelCube">Fill Level (%):</label>
+                        <input type="text" class="form-control" id="fillLevelCube" placeholder="Enter Fill Level"><br>
+                        <button class="btn btn-success" onclick="reduceFillLevel1('cube')">Reduce Fill Level</button>
+                    </div>
+                    <p id="reducedCubeResult" class="mt-3"></p>
+                </div>
+                <!-- Sphere Input -->
+                <div id="sphereInputs" class="mt-3" style="display: none;">
+                    <div class="form-group">
+                        <label for="radius">Radius:</label>
+                        <input type="number" class="form-control" id="radius" placeholder="Enter Radius">
+                    </div>
+                    <button class="btn btn-success" onclick="calculateSphereVolume()">Calculate Volume</button>
+                    <p id="sphereResult" class="mt-3"></p>
+
+                    <!-- Add the fill level input field for the sphere -->
+                    <div class="form-group mt-3">
+                        <label for="fillLevelSphere">Fill Level (%):</label>
+                        <input type="text" class="form-control" id="fillLevelSphere" placeholder="Enter Fill Level"><br>
+                        <button class="btn btn-success" onclick="reduceSphereVolume()">Reduce Fill Level</button>
+                    </div>
+                    <!-- Add the reduced sphere volume result element -->
+                    <p id="reducedSphereResult" class="mt-3"></p>
+                </div>
+                <!-- Rectangle Input -->
+                <div id="rectangleInputs" class="mt-3" style="display: none;">
+                    <div class="form-group">
+                        <label for="rectangleLength">Length:</label>
+                        <input type="number" class="form-control" id="rectangleLength" placeholder="Enter Length">
+                    </div>
+                    <div class="form-group">
+                        <label for="rectangleWidth">Width:</label>
+                        <input type="number" class="form-control" id="rectangleWidth" placeholder="Enter Width">
+                    </div>
+                    <div class="form-group">
+                        <label for="rectangleHeight">Height:</label>
+                        <input type="number" class="form-control" id="rectangleHeight" placeholder="Enter Height">
+                    </div>
+                    <button class="btn btn-success" onclick="calculateRectangleVolume()">Calculate Volume</button>
+                    <p id="rectangleResult" class="mt-3"></p>
+                    <div class="form-group">
+                        <label for="fillLevelRectangle">Fill Level (%):</label>
+                        <input type="number" class="form-control" id="fillLevelRectangle"
+                            placeholder="Enter Fill Level"><br>
+                        <button class="btn btn-success" onclick="reduceFillLevel2('rectangle')">Reduce Fill
+                            Level</button>
+                    </div>
+                    <p id="reducedRectangleResult" class="mt-3"></p>
+                </div>
+                <!-- Conical Input -->
+                <div id="conicalInputs" class="mt-3" style="display: none;">
+                    <div class="form-group">
+                        <label for="conicalLength">Length:</label>
+                        <input type="number" class="form-control" id="conicalLength" placeholder="Enter Length">
+                    </div>
+                    <div class="form-group">
+                        <label for="conicalHeight">Height:</label>
+                        <input type="number" class="form-control" id="conicalHeight" placeholder="Enter Height">
+                    </div>
+                    <div class="form-group">
+                        <label for="conicalRadius">Radius:</label>
+                        <input type="number" class="form-control" id="conicalRadius" placeholder="Enter Radius">
+                    </div>
+                    <button class="btn btn-success" onclick="calculateConicalVolume()">Calculate Volume</button>
+                    <p id="conicalResult" class="mt-3"></p>
+                    <div class="form-group">
+                        <label for="fillLevelConical">Fill Level (%):</label>
+                        <input type="number" class="form-control" id="fillLevelConical" placeholder="Enter Fill Level"><br>
+                        <button class="btn btn-success" onclick="reduceFillLevel('conical')">Reduce Fill Level</button>
+                    </div>
+                    <p id="reducedConicalResult" class="mt-3"></p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4" style="margin-top: 100px;">
+                <div class="card">
+                    <div class="display-flux text-center mt-5">
+                        <label>
+                            <input type="radio" name="temperatureUnit" value="celsius" checked> Celsius
+                        </label>
+                        <label>
+                            <input type="radio" name="temperatureUnit" value="fahrenheit"> Fahrenheit
+                        </label>
+                    </div>
+                    <div class="card__body">
+                        <h5 class="card__title  text-center">DEVICE DETAILS</h5>
+                        <h5 class="card__text text-center" id="deviceNameElement"></h5>
+                        <p class="card__footer">Temperature: <span id="temperatureElement"></span></p>
+                        <p class="card__footer">Signal: <span id="signalElement"></span></p>
+                        <p class="card__footer">Battery: <span id="batteryElement"></span></p>
+                        <p class="card__footer">Fill Level: <span id="fill_LevelElement"></span></p>
+                        <p class="card__footer">Fill Level1: <span id="fill_Level1Element"></span></p>
+                        <!-- <p class="card-text">RAG: <span id="ragElement"></span></p> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div id="diagramContainer">
+                    <!-- Diagrams will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add the Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+    <script src="./index_3pg.js"></script>
+</body>
+
+</html>
